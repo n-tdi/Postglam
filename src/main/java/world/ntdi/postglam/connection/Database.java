@@ -49,11 +49,15 @@ public class Database {
 
         try {
             Class.forName("org.postgresql.Driver");
+            logger.info("Connecting to database at " + credentialStorage.HOST());
             c = DriverManager.getConnection(
                     "jdbc:postgresql://" + credentialStorage.HOST() + ":" + credentialStorage.PORT() + "/postgres",
                     credentialStorage.USERNAME(), credentialStorage.PASSWORD()
             );
+            logger.info("Successfully connected to " + credentialStorage.HOST());
+            logger.info("Creating statement from connection");
             stmt = c.createStatement();
+            logger.info("Successfully created statement");
         } catch (ClassNotFoundException e) {
             logger.error("Unable to find class org.postgresql.Driver");
             e.printStackTrace();
