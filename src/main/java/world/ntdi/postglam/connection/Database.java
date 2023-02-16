@@ -11,6 +11,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Class for creating database objects and connections
+ */
 public class Database {
 
     /* STATEMENT for executing SQL Queries */

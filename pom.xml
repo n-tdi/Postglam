@@ -57,13 +57,21 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>world.ntdi.tazot.Tazot</mainClass>
+                            <mainClass>world.ntdi.postglam.Postglam</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/n-tdi/Postglam</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
