@@ -55,7 +55,7 @@ public enum DataTypes {
     /* If the data type can take a defined value */
     private final boolean valuable;
     /* The set value for that data type */
-    @Getter @Setter
+    @Getter
     private String value;
     DataTypes(@NonNull final String name, final boolean valuable) {
         this.name = name;
