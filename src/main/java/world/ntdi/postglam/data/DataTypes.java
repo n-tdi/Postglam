@@ -2,6 +2,7 @@ package world.ntdi.postglam.data;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * Refer to <a href="https://www.postgresql.org/docs/current/datatype.html">Postgresql Doc</a> for an explanation on each datatype.
@@ -45,11 +46,15 @@ public enum DataTypes {
     XML("xml");
 
     private final String name;
+    @Getter @Setter
+    private String value;
     DataTypes(@NonNull final String name) {
         this.name = name;
     }
 
     public String toString() {
-        return this.name;
+        return (value != null ? name + "(" + value + ")" : name);
     }
+
+
 }
