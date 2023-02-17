@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import world.ntdi.postglam.Postglam;
-import world.ntdi.postglam.helper.CredentialStorage;
+import world.ntdi.postglam.data.CredentialStorage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
