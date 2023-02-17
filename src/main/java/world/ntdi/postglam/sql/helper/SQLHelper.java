@@ -28,11 +28,10 @@ public final class SQLHelper {
         for (Map.Entry<String, DataTypes> entry : keys.entrySet()) {
             statement.append(entry.getKey()).append(" ").append(entry.getValue()).append(" ").append(entry.getValue().getNotNull());
 
-
-            if (i++ != keys.entrySet().size()) {
+            if (i != keys.entrySet().size() - 1) {
                 statement.append(", ");
+                i++;
             }
-            i++;
         }
 
         statement.append(");");
