@@ -5,6 +5,7 @@ import lombok.NonNull;
 import org.slf4j.Logger;
 import world.ntdi.postglam.Postglam;
 import world.ntdi.postglam.data.CredentialStorage;
+import world.ntdi.postglam.logger.Logging;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +15,7 @@ import java.sql.Statement;
 /**
  * Class for creating database objects and connections
  */
-public class Database {
+public class Database extends Logging {
 
     /* STATEMENT for executing SQL Queries */
     @Getter
@@ -37,6 +38,7 @@ public class Database {
      * @param PASSWORD The password for root connection to the database, E.g. {@code 1234}
      */
     public Database(@NonNull final String HOST, final int PORT, @NonNull final String USERNAME, @NonNull final String PASSWORD) {
+        super(Database.class);
         this.credentialStorage = new CredentialStorage(HOST, PORT, USERNAME, PASSWORD);
     }
 
@@ -45,24 +47,22 @@ public class Database {
      * <i>DO NOT</i> create a new connection without closing the previous one to prevent <b>memory leaks!</b>
      */
     public void connect() {
-        Logger logger = Postglam.getLogger(Database.class);
-
         try {
             Class.forName("org.postgresql.Driver");
-            logger.info("Connecting to database at " + credentialStorage.HOST());
+            getLogger().info("Connecting to database at " + credentialStorage.HOST());
             c = DriverManager.getConnection(
                     "jdbc:postgresql://" + credentialStorage.HOST() + ":" + credentialStorage.PORT() + "/postgres",
                     credentialStorage.USERNAME(), credentialStorage.PASSWORD()
             );
-            logger.info("Successfully connected to " + credentialStorage.HOST());
-            logger.info("Creating statement from connection");
+            getLogger().info("Successfully connected to " + credentialStorage.HOST());
+            getLogger().info("Creating statement from connection");
             stmt = c.createStatement();
-            logger.info("Successfully created statement");
+            getLogger().info("Successfully created statement");
         } catch (ClassNotFoundException e) {
-            logger.error("Unable to find class org.postgresql.Driver");
+            getLogger().error("Unable to find class org.postgresql.Driver");
             e.printStackTrace();
         } catch (SQLException e) {
-            logger.error("Connection failed. Credentials could be incorrect or SQL has gone seriously wrong!");
+            getLogger().error("Connection failed. Credentials could be incorrect or SQL has gone seriously wrong!");
             e.printStackTrace();
         }
     }
@@ -77,6 +77,7 @@ public class Database {
 
             c = null;
             stmt = null;
+            getLogger().info("Successfully flushed out all connections.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
