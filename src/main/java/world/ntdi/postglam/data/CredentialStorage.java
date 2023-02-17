@@ -1,4 +1,4 @@
-package world.ntdi.postglam.helper;
+package world.ntdi.postglam.data;
 
 /**
  * A record for storing Database credentials.
