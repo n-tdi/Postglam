@@ -3,8 +3,8 @@ package world.ntdi.postglam.sql.module;
 import lombok.Getter;
 import world.ntdi.postglam.connection.Database;
 import world.ntdi.postglam.data.DataTypes;
-import world.ntdi.postglam.sql.helper.SQLRowHelper;
-import world.ntdi.postglam.sql.helper.SQLTableHelper;
+import world.ntdi.postglam.sql.translator.SQLRowTranslator;
+import world.ntdi.postglam.sql.translator.SQLTableTranslator;
 
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
@@ -42,7 +42,7 @@ public class Table {
         this.primaryKey = primaryKey;
         this.keys = keys;
 
-        executeStatement(SQLTableHelper.tableTranslate(tableName, primaryKey, keys));
+        executeStatement(SQLTableTranslator.tableTranslate(tableName, primaryKey, keys));
     }
 
     /**
@@ -58,7 +58,7 @@ public class Table {
      * @throws SQLException Will throw errors if trying to access closed statements/connections
      */
     public void insert(String primaryValue, String... values) throws SQLException {
-        executeStatement(SQLTableHelper.tableInsertTranslate(tableName, primaryKey, primaryValue, keys, values));
+        executeStatement(SQLTableTranslator.tableInsertTranslate(tableName, primaryKey, primaryValue, keys, values));
     }
 
     private void executeStatement(final String statement) throws SQLException {
@@ -74,6 +74,6 @@ public class Table {
      * @throws SQLException Throws errors if trying to access closed statements/connections
      */
     public boolean doesRowExist(String primaryValue) throws SQLException {
-        return SQLRowHelper.rowExists(this, primaryValue);
+        return SQLRowTranslator.rowExists(this, primaryValue);
     }
 }

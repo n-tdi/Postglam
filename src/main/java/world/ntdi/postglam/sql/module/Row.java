@@ -1,7 +1,7 @@
 package world.ntdi.postglam.sql.module;
 
 import lombok.Getter;
-import world.ntdi.postglam.sql.helper.SQLRowHelper;
+import world.ntdi.postglam.sql.translator.SQLRowTranslator;
 
 import java.sql.SQLDataException;
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ public class Row {
      * Relies on the developer to know how to cast, and what type of data to cast the value to.
      */
     @Getter
-    private final Object[] keys;
+    private final Object[] values;
 
     /**
      * Create a representation of a row from a Table's primary key value.
@@ -35,6 +35,30 @@ public class Row {
             throw new SQLDataException("Unable to find row with primary value " + primaryValue);
         }
 
-        this.keys = SQLRowHelper.rowTranslate(table, primaryValue);
+        this.values = SQLRowTranslator.rowTranslate(table, primaryValue);
+    }
+
+    /**
+     * Generate a string version of the row in json format.
+     * @return a String representation of the row.
+     */
+    @Override
+    public String toString() {
+        StringBuilder dataList = new StringBuilder();
+
+        dataList.append("{\"").append(table.getPrimaryKey().getKey()).append("\":\"").append(values[0]).append("\", ");
+
+        for (int i = 1; i < values.length; i++) {
+            dataList.append("\"").append(table.getKeys().keySet().toArray()[i]).append("\":\"").append(values[i]).append("\"");
+
+            int j = i; // So we don't ++ i, breaking the loop
+            if (j++ < values.length - 1) { // We minus 1 because length doesn't start from 0, but loops do. For whatever reason. This checks if it is the last loop
+                dataList.append(", "); // Add comma after datatype if isn't last one.
+            }
+        }
+
+        dataList.append("}");
+
+        return dataList.toString();
     }
 }
