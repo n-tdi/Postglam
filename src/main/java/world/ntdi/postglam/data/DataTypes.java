@@ -89,8 +89,21 @@ public enum DataTypes {
         return (value != null ? name + "(" + value + ")" : name);
     }
 
+    /**
+     * Set the value of the data type.
+     * This is not the same as setting a value in a column, rather a constraint instead.
+     * @param value The value for the data type. E.g. 36
+     */
     public void setValue(@NonNull final String value) {
         if (valuable) setValue(value);
         else throw new InvalidParameterException("Cannot apply a value to this data type");
+    }
+
+    /**
+     * Get if there will be a NOT NULL in the data type or not
+     * @return "NOT NULL" or "" if notNull is set to true/false
+     */
+    public String getNotNull() {
+        return (notNull ? "NOT NULL" : "");
     }
 }
