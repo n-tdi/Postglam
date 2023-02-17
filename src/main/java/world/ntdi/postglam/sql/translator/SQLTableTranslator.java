@@ -1,4 +1,4 @@
-package world.ntdi.postglam.sql.helper;
+package world.ntdi.postglam.sql.translator;
 
 import lombok.NonNull;
 import world.ntdi.postglam.data.DataTypes;
@@ -6,7 +6,10 @@ import world.ntdi.postglam.data.DataTypes;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public final class SQLTableHelper {
+/**
+ * Functional class to translate the representative objects into SQL
+ */
+public final class SQLTableTranslator {
 
     /**
      * Translate arguements into SQL for creating a table.

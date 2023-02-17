@@ -1,4 +1,4 @@
-package world.ntdi.postglam.sql.helper;
+package world.ntdi.postglam.sql.translator;
 
 import lombok.NonNull;
 import world.ntdi.postglam.data.DataTypes;
@@ -9,7 +9,10 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class SQLRowHelper {
+/**
+ * Functional class to translate the representative objects into SQL
+ */
+public final class SQLRowTranslator {
 
     /**
      * Translate a table's values with a primary key into a Row representation.

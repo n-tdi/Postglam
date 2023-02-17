@@ -1,5 +1,5 @@
 world.ntdi.postglam
 world.ntdi.postglam.connection
 world.ntdi.postglam.data
-world.ntdi.postglam.sql.helper
+world.ntdi.postglam.sql.translator
 world.ntdi.postglam.sql.module
