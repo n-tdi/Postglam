@@ -50,13 +50,28 @@ public enum DataTypes {
     UUID("uuid", false),
     XML("xml", false);
 
-    /* Name of the SQL form of the data type */
+    /**
+     * Name of the SQL form of the data type
+     */
     private final String name;
-    /* If the data type can take a defined value */
+    /**
+     * If the data type can take a defined value
+     */
     private final boolean valuable;
-    /* The set value for that data type */
+
+    /**
+     * The set value for that data type
+     */
     @Getter
     private String value;
+
+    /**
+     * If the value will be classed with null or Not Null.
+     * By default, it is not Null.
+     * This is used for creation of tables and such.
+     */
+    @Getter @Setter
+    private boolean notNull = true;
     DataTypes(@NonNull final String name, final boolean valuable) {
         this.name = name;
         this.valuable = valuable;
