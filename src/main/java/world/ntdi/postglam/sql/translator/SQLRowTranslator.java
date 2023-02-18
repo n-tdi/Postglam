@@ -30,12 +30,11 @@ public final class SQLRowTranslator {
         // God damn, love java. This is why Postglam is glamorous, so you don't have to type out this one-liner shit.
         ResultSet resultSet = table.getDatabase().getStmt().executeQuery("SELECT * FROM " + table.getTableName() + " WHERE " + table.getPrimaryKey().getKey() + " = " + DataTypes.needQuotes(primaryValue, table.getPrimaryKey().getValue()));
 
-        int i = 1;
-        while (resultSet.next()) {
-            columnValues.add(resultSet.getObject(i));
-            i++;
+        if (resultSet.next()) {
+            for (int i = 1; i <= table.getKeys().size() + 1; i++) {
+                columnValues.add(resultSet.getObject(i));
+            }
         }
-
         return columnValues.toArray(Object[]::new);
     }
 

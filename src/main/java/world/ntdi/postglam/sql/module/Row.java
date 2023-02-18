@@ -49,7 +49,7 @@ public class Row {
         dataList.append("{\"").append(table.getPrimaryKey().getKey()).append("\":\"").append(values[0]).append("\", ");
 
         for (int i = 1; i < values.length; i++) {
-            dataList.append("\"").append(table.getKeys().keySet().toArray()[i]).append("\":\"").append(values[i]).append("\"");
+            dataList.append("\"").append(table.getKeys().keySet().toArray()[i - 1]).append("\":\"").append(values[i]).append("\"");
 
             int j = i; // So we don't ++ i, breaking the loop
             if (j++ < values.length - 1) { // We minus 1 because length doesn't start from 0, but loops do. For whatever reason. This checks if it is the last loop
