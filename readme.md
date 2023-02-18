@@ -20,7 +20,8 @@ Check the latest full release tag, the version will be exactly as it reads.
 
 ## Wiki
 [Javadocs](https://docs.postglam.tech)
-Tutorials and examples will be ecoming soon.
+
+[Wiki](https://github.com/Postglam/wiki)
 
 ## Support
 Please feel free to make an [Issue](https://github.com/n-tdi/Postglam/issues) with any problems you may have.
