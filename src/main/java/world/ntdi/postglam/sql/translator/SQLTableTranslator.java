@@ -57,8 +57,8 @@ public final class SQLTableTranslator {
 
         statement.append(DataTypes.needQuotes(primaryValue, primaryKey.getValue())).append(", ");
 
-        for (int i = 0; i < values.length; i++) {
-            DataTypes datatype = (DataTypes) keys.values().toArray()[i]; // Grab the datatype from the list of keys
+        for (int i = 1; i < values.length; i++) {
+            DataTypes datatype = (DataTypes) keys.values().toArray()[i - 1]; // Grab the datatype from the list of keys
             statement.append(DataTypes.needQuotes(values[i], datatype)); // Append the data value and check if it needs the needQuotes function
 
             int j = i; // So we don't ++ i, breaking the loop
