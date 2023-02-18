@@ -49,6 +49,17 @@ public class Row {
     }
 
     /**
+     * Fetch a point of data from a Row and Column.
+     *
+     * @param column The column that contains the targeted data
+     * @return The data
+     * @throws SQLException Will throw errors if trying to use closed statement/connection.
+     */
+    public Object fetch(Column column) throws SQLException {
+        return SQLRowTranslator.rowFetch(table, this, column);
+    }
+
+    /**
      * Generate a string version of the row in json format.
      * @return a String representation of the row.
      */
