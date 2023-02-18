@@ -75,6 +75,7 @@ public enum DataTypes {
      * By default, it is not Null.
      * This is used for creation of tables and such.
      */
+    @SuppressWarnings("NonFinalFieldInEnum")
     @Getter @Setter
     private boolean notNull = true;
     DataTypes(@NonNull final String name, final boolean valuable, final boolean needsQuotes) {

@@ -2,8 +2,6 @@ package world.ntdi.postglam.connection;
 
 import lombok.Getter;
 import lombok.NonNull;
-import org.slf4j.Logger;
-import world.ntdi.postglam.Postglam;
 import world.ntdi.postglam.data.CredentialStorage;
 import world.ntdi.postglam.logger.Logging;
 
