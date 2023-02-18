@@ -107,20 +107,7 @@ public class Table {
      * @throws SQLException Throws errors if trying to access closed statements/connections
      */
     public void deleteAllRowsWhere(String column, String value) throws SQLException {
-        DataTypes dataType = null;
-        if (primaryKey.getKey().equals(column)) dataType = primaryKey.getValue();
-        if (dataType == null) {
-            for (Map.Entry<String, DataTypes> columnEntry : keys.entrySet()) {
-                if (columnEntry.getKey().equals(column)) {
-                    dataType = columnEntry.getValue();
-                    break;
-                }
-            }
-        }
-        if (dataType == null) {
-            throw new ArrayIndexOutOfBoundsException("Unable to find column in table");
-        }
-
+        DataTypes dataType = DataTypes.getDataTypeFromColum(this, column);
         database.getStmt().execute(SQLTableTranslator.tableDeleteAllRowsWhereTranslate(tableName, column, value, dataType));
     }
 }

@@ -2,12 +2,15 @@ package world.ntdi.postglam.sql.translator;
 
 import lombok.NonNull;
 import world.ntdi.postglam.data.DataTypes;
+import world.ntdi.postglam.sql.module.Column;
+import world.ntdi.postglam.sql.module.Row;
 import world.ntdi.postglam.sql.module.Table;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Functional class to translate the representative objects into SQL
@@ -50,5 +53,36 @@ public final class SQLRowTranslator {
     public static boolean rowExists(@NonNull final Table table, @NonNull final String primaryValue) throws SQLException {
         ResultSet resultSet = table.getDatabase().getStmt().executeQuery("SELECT * FROM " + table.getTableName() + " WHERE " + table.getPrimaryKey().getKey() + " = " + DataTypes.needQuotes(primaryValue, table.getPrimaryKey().getValue()));
         return resultSet.next();
+    }
+
+    /**
+     * Middleware method between {@code rowExists()} and {@code fetch()}
+     *
+     * @param table The table that holds the data
+     * @param row The row in which the data lives
+     * @param column The column in which the data lives
+     * @return The data that was targeted. If no value is present then null will be returned.
+     * @throws SQLException Will throw errors if trying to access close statement/connection.
+     */
+    public static Object rowFetch(@NonNull final Table table, @NonNull final Row row, @NonNull final Column column) throws SQLException {
+        ResultSet resultSet = table.getDatabase().getStmt().executeQuery(rowFetchTranslate(table.getTableName(), column.getColumnName(), table.getPrimaryKey(), row.getPrimaryValue()));
+
+        if (resultSet.next()) {
+            return resultSet.getObject(1);
+        }
+        return null;
+    }
+
+    /**
+     * Method that generates SQL for the fetching data.
+     *
+     * @param tableName Name of the table in which the data lies in
+     * @param columnName Name of the column in which the data lies in
+     * @param primaryKey Primary key values that contain the row in which the data lies in
+     * @param primaryValue The value of the primary key
+     * @return Returns a SQL statement.
+     */
+    public static String rowFetchTranslate(@NonNull final String tableName, @NonNull final String columnName, @NonNull final Map.Entry<String, DataTypes> primaryKey, @NonNull final String primaryValue) {
+        return "SELECT " + columnName + " FROM " + tableName + " WHERE " + primaryKey.getKey() + " = " + DataTypes.needQuotes(primaryValue, primaryKey.getValue()) + ";";
     }
 }
