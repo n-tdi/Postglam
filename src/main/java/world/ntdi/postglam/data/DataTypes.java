@@ -3,8 +3,10 @@ package world.ntdi.postglam.data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import world.ntdi.postglam.sql.module.Table;
 
 import java.security.InvalidParameterException;
+import java.util.Map;
 
 /**
  * Refer to <a href="https://www.postgresql.org/docs/current/datatype.html">Postgresql Doc</a> for an explanation on each datatype.
@@ -124,5 +126,29 @@ public enum DataTypes {
      */
     public static String needQuotes(String target, DataTypes dataType) {
         return (dataType.isNeedsQuotes() ? "'" + target + "'" : target);
+    }
+
+    /**
+     * Will search through a tables primary key and keys to find the correct Data Type for the column.
+     *
+     * @param table The table in which the column lies in
+     * @param column The name of the column in String form
+     * @return The data type associated with the column.
+     */
+    public static DataTypes getDataTypeFromColum(@NonNull final Table table, @NonNull final String column) {
+        DataTypes dataType = null;
+        if (table.getPrimaryKey().getKey().equals(column)) dataType = table.getPrimaryKey().getValue();
+        if (dataType == null) {
+            for (Map.Entry<String, DataTypes> columnEntry : table.getKeys().entrySet()) {
+                if (columnEntry.getKey().equals(column)) {
+                    dataType = columnEntry.getValue();
+                    break;
+                }
+            }
+        }
+        if (dataType == null) {
+            throw new ArrayIndexOutOfBoundsException("Unable to find column in table");
+        }
+        return dataType;
     }
 }
