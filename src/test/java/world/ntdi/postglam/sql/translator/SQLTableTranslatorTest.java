@@ -35,12 +35,12 @@ class SQLTableTranslatorTest {
         String primaryValue = "fd93885e-906e-4fc9-8fc9-0982ac3a1fd5";
         LinkedHashMap<String, DataTypes> keys = new LinkedHashMap<>();
         keys.put("level", DataTypes.INTEGER);
-        String[] values = new String[]{"fd93885e-906e-4fc9-8fc9-0982ac3a1fd5", "1"};
+        String[] values = new String[]{"1"};
 
         assertEquals(SQLTableTranslator.tableInsertTranslate(name, primaryKey, primaryValue, keys, values), "INSERT INTO test VALUES ('fd93885e-906e-4fc9-8fc9-0982ac3a1fd5', 1);");
 
         keys.put("name", DataTypes.TEXT);
-        String[] values2 = new String[]{"fd93885e-906e-4fc9-8fc9-0982ac3a1fd5", "1", "ntdi"};
+        String[] values2 = new String[]{"1", "ntdi"};
         assertEquals(SQLTableTranslator.tableInsertTranslate(name, primaryKey, primaryValue, keys, values2), "INSERT INTO test VALUES ('fd93885e-906e-4fc9-8fc9-0982ac3a1fd5', 1, 'ntdi');");
     }
 
