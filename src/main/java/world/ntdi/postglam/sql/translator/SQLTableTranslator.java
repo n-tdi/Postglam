@@ -71,4 +71,37 @@ public final class SQLTableTranslator {
 
         return statement.toString();
     }
+
+    /**
+     * Generate SQL to drop a table.
+     *
+     * @param tableName The name of the table
+     * @return An SQL statement to drop a table.
+     */
+    public static String tableDropTranslate(@NonNull final String tableName) {
+        return "DROP TABLE " + tableName + ";";
+    }
+
+    /**
+     * Generate SQL to delete all rows of a table.
+     *
+     * @param tableName The name of the table
+     * @return An SQL statement to delete all rows of the table.
+     */
+    public static String tableDeleteAllTranslate(@NonNull final String tableName) {
+        return "DELETE FROM " + tableName + ";";
+    }
+
+    /**
+     * Generate SQL to delete all rows of a table where a condition is met.
+     *
+     * @param tableName The name of the table
+     * @param column The name of the column
+     * @param value The value to look for in the column
+     * @param dataType The datatype that the column represents
+     * @return An SQL statement to delete all rows where a condition is met.
+     */
+    public static String tableDeleteAllRowsWhereTranslate(@NonNull final String tableName, @NonNull final String column, @NonNull final String value, @NonNull final DataTypes dataType) {
+        return "DELETE FROM " + tableName + " WHERE " + column + " = " + DataTypes.needQuotes(value, dataType) + ";";
+    }
 }

@@ -39,6 +39,16 @@ public class Row {
     }
 
     /**
+     * Delete the current row.
+     * <b>NOTE: This is PERMANENT and there is no undo!</b>
+     *
+     * @throws SQLException Will throw errors if trying to use closed statement/connection.
+     */
+    public void drop() throws SQLException {
+        table.deleteAllRowsWhere(table.getPrimaryKey().getKey(), primaryValue);
+    }
+
+    /**
      * Generate a string version of the row in json format.
      * @return a String representation of the row.
      */

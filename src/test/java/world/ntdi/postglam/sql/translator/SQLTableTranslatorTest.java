@@ -1,9 +1,6 @@
 package world.ntdi.postglam.sql.translator;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import world.ntdi.postglam.data.DataTypes;
 
 import java.util.LinkedHashMap;
@@ -52,5 +49,21 @@ class SQLTableTranslatorTest {
     @AfterAll
     public static void done() {
         System.out.println("Finished running test for SQL Table Translation");
+    }
+
+    @Test
+    void tableDropTranslate() {
+        assertEquals(SQLTableTranslator.tableDropTranslate("test"), "DROP TABLE test;");
+    }
+
+    @Test
+    void tableDeleteAllTranslate() {
+        assertEquals(SQLTableTranslator.tableDeleteAllTranslate("test"), "DELETE FROM test;");
+    }
+
+    @Test
+    void tableDeleteAllRowsWhereTranslate() {
+        assertEquals(SQLTableTranslator.tableDeleteAllRowsWhereTranslate("test", "id", "1", DataTypes.INTEGER), "DELETE FROM test WHERE id = 1;");
+        assertEquals(SQLTableTranslator.tableDeleteAllRowsWhereTranslate("test", "name", "ntdi", DataTypes.TEXT), "DELETE FROM test WHERE name = 'ntdi';");
     }
 }

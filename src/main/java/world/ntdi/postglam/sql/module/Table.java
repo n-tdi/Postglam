@@ -76,4 +76,51 @@ public class Table {
     public boolean doesRowExist(String primaryValue) throws SQLException {
         return SQLRowTranslator.rowExists(this, primaryValue);
     }
+
+    /**
+     * Drop the table from the database.
+     * <b>NOTE: This action is PERMANENT and there is no undo!</b>
+     *
+     * @throws SQLException Throws errors if trying to access closed statements/connections
+     */
+    public void drop() throws SQLException {
+        database.getStmt().execute(SQLTableTranslator.tableDropTranslate(tableName));
+    }
+
+    /**
+     * Delete all the rows in a table.
+     * <b>NOTE: This action is PERMANENT and there is no undo!</b>
+     *
+     * @throws SQLException Throws errors if trying to access closed statements/connections
+     */
+    public void deleteAllRows() throws SQLException {
+        database.getStmt().execute(SQLTableTranslator.tableDeleteAllTranslate(tableName));
+    }
+
+    /**
+     * Delete all the rows where a condition is met.
+     * This method uses the table's columns that you supplied when you first made it and searches for it.
+     * Then it used the passed value and removes all rows where the condition is met.
+     *
+     * @param column The name of the column that you're targeting for a condition
+     * @param value The value of the column for the condition
+     * @throws SQLException Throws errors if trying to access closed statements/connections
+     */
+    public void deleteAllRowsWhere(String column, String value) throws SQLException {
+        DataTypes dataType = null;
+        if (primaryKey.getKey().equals(column)) dataType = primaryKey.getValue();
+        if (dataType == null) {
+            for (Map.Entry<String, DataTypes> columnEntry : keys.entrySet()) {
+                if (columnEntry.getKey().equals(column)) {
+                    dataType = columnEntry.getValue();
+                    break;
+                }
+            }
+        }
+        if (dataType == null) {
+            throw new ArrayIndexOutOfBoundsException("Unable to find column in table");
+        }
+
+        database.getStmt().execute(SQLTableTranslator.tableDeleteAllRowsWhereTranslate(tableName, column, value, dataType));
+    }
 }
