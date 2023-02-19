@@ -1,5 +1,7 @@
 # [Postglam](https://postglam.tech)
 [![Javadoc](https://img.shields.io/badge/JavaDoc-Online-green)](https://docs.postglam.tech)
+<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
+<img src="https://img.shields.io/badge/OpenJDK-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
 
 Postglam is a glamorous (glam) way of interacting with the PostgreSQL (Post) database structure, allowing you to create objects for connections and structured method calling.
 
