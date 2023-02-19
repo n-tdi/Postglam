@@ -5,8 +5,8 @@ Postglam is a glamorous (glam) way of interacting with the PostgreSQL (Post) dat
 *This is for your pom.xml*
 ```xml
 <repository>
-    <id>github</id>
-    <url>https://maven.pkg.github.com/n-tdi/Postglam/</url>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io/</url>
 </repository>
 ```
 
