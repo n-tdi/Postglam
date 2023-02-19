@@ -5,6 +5,7 @@ import world.ntdi.postglam.data.DataTypes;
 import world.ntdi.postglam.sql.translator.SQLColumnTranslator;
 
 import java.sql.SQLException;
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class Column {
     public Column(Table table, String column) throws SQLException {
         this.table = table;
         this.columnName = column;
-        this.columnValues = Map.entry(column, DataTypes.getDataTypeFromColum(table, column));
+        this.columnValues = new AbstractMap.SimpleEntry<>(column, DataTypes.getDataTypeFromColum(table, column));
         this.values = SQLColumnTranslator.columnValuesTranslate(table, columnValues);
     }
 

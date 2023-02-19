@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import world.ntdi.postglam.data.DataTypes;
 
+import java.util.AbstractMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +19,7 @@ class SQLRowTranslatorTest {
 
     @Test
     void rowFetchTranslate() {
-        assertEquals("SELECT level FROM stats WHERE id = '1';", SQLRowTranslator.rowFetchTranslate("stats", "level", Map.entry("id", DataTypes.TEXT), "1"));
+        assertEquals("SELECT level FROM stats WHERE id = '1';", SQLRowTranslator.rowFetchTranslate("stats", "level", new AbstractMap.SimpleEntry<>("id", DataTypes.TEXT), "1"));
     }
 
     @AfterEach

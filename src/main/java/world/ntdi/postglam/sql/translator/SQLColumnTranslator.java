@@ -31,6 +31,6 @@ public class SQLColumnTranslator {
             values.add(resultSet.getObject(column.getKey()));
         }
 
-        return values.toArray(Object[]::new);
+        return values.toArray();
     }
 }

@@ -38,7 +38,7 @@ public final class SQLRowTranslator {
                 columnValues.add(resultSet.getObject(i));
             }
         }
-        return columnValues.toArray(Object[]::new);
+        return columnValues.toArray();
     }
 
     /**
