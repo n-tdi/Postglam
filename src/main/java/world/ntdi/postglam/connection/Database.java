@@ -47,12 +47,12 @@ public class Database extends Logging {
     public void connect() {
         try {
             Class.forName("org.postgresql.Driver");
-            getLogger().info("Connecting to database at " + credentialStorage.HOST());
+            getLogger().info("Connecting to database at " + credentialStorage.getHOST());
             c = DriverManager.getConnection(
-                    "jdbc:postgresql://" + credentialStorage.HOST() + ":" + credentialStorage.PORT() + "/postgres",
-                    credentialStorage.USERNAME(), credentialStorage.PASSWORD()
+                    "jdbc:postgresql://" + credentialStorage.getHOST() + ":" + credentialStorage.getPORT() + "/postgres",
+                    credentialStorage.getUSERNAME(), credentialStorage.getPASSWORD()
             );
-            getLogger().info("Successfully connected to " + credentialStorage.HOST());
+            getLogger().info("Successfully connected to " + credentialStorage.getHOST());
             getLogger().info("Creating statement from connection");
             stmt = c.createStatement();
             getLogger().info("Successfully created statement");
