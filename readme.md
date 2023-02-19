@@ -20,7 +20,7 @@ Postglam is a glamorous (glam) way of interacting with the PostgreSQL (Post) dat
 Check the latest full release tag, the version will be exactly as it reads.
 
 ## Usage
-[![Javadoc](https://img.shields.io/badge/JavaDoc-Online-green)](https://docs.postglam.tech/javadoc/)
+[![Javadoc](https://img.shields.io/badge/JavaDoc-Online-green)](https://docs.postglam.tech)
 
 [Wiki](https://github.com/n-tdi/Postglam/wiki)
 
