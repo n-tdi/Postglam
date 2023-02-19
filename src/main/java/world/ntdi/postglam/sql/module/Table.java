@@ -102,7 +102,7 @@ public class Table {
      * This method uses the table's columns that you supplied when you first made it and searches for it.
      * Then it used the passed value and removes all rows where the condition is met.
      *
-     * @param column The name of the column that you're targeting for a condition
+     * @param column The column object that contains the value
      * @param value The value of the column for the condition
      * @throws SQLException Throws errors if trying to access closed statements/connections
      */
