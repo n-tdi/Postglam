@@ -18,7 +18,7 @@ class SQLTableTranslatorTest {
     @Test
     void tableTranslate() {
         String name = "test";
-        Map.Entry<String, DataTypes> primaryKey = new AbstractMap.SimpleEntry<>("id", DataTypes.UUID);
+        Map.Entry<String, DataTypes> primaryKey = Map.entry("id", DataTypes.UUID);
         LinkedHashMap<String, DataTypes> keys = new LinkedHashMap<>();
         keys.put("level", DataTypes.INTEGER);
         assertEquals(SQLTableTranslator.tableTranslate(name, primaryKey, keys), "CREATE TABLE IF NOT EXISTS test (id uuid NOT NULL PRIMARY KEY, level integer NOT NULL);");
@@ -29,7 +29,7 @@ class SQLTableTranslatorTest {
     @Test
     void tableInsertTranslate() {
         String name = "test";
-        Map.Entry<String, DataTypes> primaryKey = new AbstractMap.SimpleEntry<>("id", DataTypes.UUID);
+        Map.Entry<String, DataTypes> primaryKey = Map.entry("id", DataTypes.UUID);
         String primaryValue = "fd93885e-906e-4fc9-8fc9-0982ac3a1fd5";
         LinkedHashMap<String, DataTypes> keys = new LinkedHashMap<>();
         keys.put("level", DataTypes.INTEGER);

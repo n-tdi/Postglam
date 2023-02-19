@@ -19,7 +19,7 @@ class SQLRowTranslatorTest {
 
     @Test
     void rowFetchTranslate() {
-        assertEquals("SELECT level FROM stats WHERE id = '1';", SQLRowTranslator.rowFetchTranslate("stats", "level", new AbstractMap.SimpleEntry<>("id", DataTypes.TEXT), "1"));
+        assertEquals("SELECT level FROM stats WHERE id = '1';", SQLRowTranslator.rowFetchTranslate("stats", "level", Map.entry("id", DataTypes.TEXT), "1"));
     }
 
     @AfterEach

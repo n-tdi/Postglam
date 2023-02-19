@@ -32,7 +32,7 @@ public class Column {
     public Column(Table table, String column) throws SQLException {
         this.table = table;
         this.columnName = column;
-        this.columnValues = new AbstractMap.SimpleEntry<>(column, DataTypes.getDataTypeFromColum(table, column));
+        this.columnValues = Map.entry(column, DataTypes.getDataTypeFromColum(table, column));
         this.values = SQLColumnTranslator.columnValuesTranslate(table, columnValues);
     }
 
