@@ -45,7 +45,7 @@ public class Row {
      * @throws SQLException Will throw errors if trying to use closed statement/connection.
      */
     public void drop() throws SQLException {
-        table.deleteAllRowsWhere(table.getPrimaryKey().getKey(), primaryValue);
+        table.deleteAllRowsWhere(new Column(table, table.getPrimaryKey().getKey()), primaryValue);
     }
 
     /**

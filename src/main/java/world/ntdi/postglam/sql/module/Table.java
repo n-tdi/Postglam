@@ -106,8 +106,7 @@ public class Table {
      * @param value The value of the column for the condition
      * @throws SQLException Throws errors if trying to access closed statements/connections
      */
-    public void deleteAllRowsWhere(String column, String value) throws SQLException {
-        DataTypes dataType = DataTypes.getDataTypeFromColum(this, column);
-        database.getStmt().execute(SQLTableTranslator.tableDeleteAllRowsWhereTranslate(tableName, column, value, dataType));
+    public void deleteAllRowsWhere(Column column, String value) throws SQLException {
+        database.getStmt().execute(SQLTableTranslator.tableDeleteAllRowsWhereTranslate(tableName, column.getColumnName(), value, column.getColumnValues().getValue()));
     }
 }
