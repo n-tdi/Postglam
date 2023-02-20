@@ -18,10 +18,10 @@ public class Table {
     private final Database database;
 
     @Getter
-    private final String tableName;
+    private String tableName;
 
     @Getter
-    private final Map.Entry<String, DataTypes> primaryKey;
+    private Map.Entry<String, DataTypes> primaryKey;
 
     @Getter
     private final LinkedHashMap<String, DataTypes> keys;
@@ -108,5 +108,74 @@ public class Table {
      */
     public void deleteAllRowsWhere(Column column, String value) throws SQLException {
         database.getStmt().execute(SQLTableTranslator.tableDeleteAllRowsWhereTranslate(tableName, column.getColumnName(), value, column.getColumnValues().getValue()));
+    }
+
+    /**
+     * Access all the altering methods for the table.
+     * @return Alter
+     */
+    public Alter alter() {
+        return new Alter();
+    }
+
+    /**
+     * Alter utility class to organize Tables better.
+     */
+    public class Alter {
+        /**
+         * Rename a column in a table.
+         *
+         * @param column The column's current object
+         * @param newName The new name for the column
+         * @throws SQLException Will throw errors if trying to access closed statement/connection.
+         */
+        public void renameColumn(Column column, String newName) throws SQLException {
+            getDatabase().getStmt().execute("ALTER TABLE " + getTableName() + " RENAME COLUMN " + column.getColumnName() + " TO " + newName + ";");
+
+            if (primaryKey.getKey().equals(column.getColumnName())) {
+                primaryKey = Map.entry(newName, primaryKey.getValue());
+            } else if (keys.containsKey(column.getColumnName())) {
+                keys.put(newName, keys.get(column.getColumnName()));
+                keys.remove(column.getColumnName());
+            }
+        }
+
+        /**
+         * Rename the current table.
+         *
+         * @param newName The new name for the table
+         * @throws SQLException Will throw errors if trying to access closed statement/connection.
+         */
+        public void rename(String newName) throws SQLException {
+            getDatabase().getStmt().execute("ALTER TABLE " + getTableName() + " RENAME TO " + newName + ";");
+            tableName = newName;
+        }
+
+        /**
+         * Add a column to the current table.
+         *
+         * @param columnName The new column's name
+         * @param dataType The datatype the column represents
+         * @throws SQLException Will throw errors if trying to access closed statement/connection.
+         */
+        public void addColumn(String columnName, DataTypes dataType) throws SQLException {
+            getDatabase().getStmt().execute("ALTER TABLE " + getTableName() + " ADD COLUMN " + columnName + " " + dataType.toString() + " " + dataType.getNotNull() + ";");
+            keys.put(columnName, dataType);
+        }
+
+        /**
+         * Drop a column out of the current table.
+         *
+         * @param column The column to drop
+         * @throws SQLException Will throw errors if trying to access closed statement/connection.
+         */
+        public void dropColumn(Column column) throws SQLException {
+            if (column.getColumnName().equals(getPrimaryKey().getKey())) {
+                throw new RuntimeException("Cannot DROP primary column");
+            }
+
+            getDatabase().getStmt().execute("ALTER TABLE " + getTableName() + " DROP COLUMN " + column.getColumnName() + " RESTRICT;");
+            keys.remove(column.getColumnName());
+        }
     }
 }
