@@ -60,6 +60,17 @@ public class Row {
     }
 
     /**
+     * Update a value inside the row.
+     *
+     * @param column The column that contains the targeted value
+     * @param value The new value to replace the old one
+     * @throws SQLException Will throw errors if trying to use closed connection/statement.
+     */
+    public void update(Column column, String value) throws SQLException {
+        SQLRowTranslator.rowUpdateTranslate(table, this, column, value);
+    }
+
+    /**
      * Generate a string version of the row in json format.
      * @return a String representation of the row.
      */

@@ -62,7 +62,7 @@ public final class SQLRowTranslator {
      * @param row The row in which the data lives
      * @param column The column in which the data lives
      * @return The data that was targeted. If no value is present then null will be returned.
-     * @throws SQLException Will throw errors if trying to access close statement/connection.
+     * @throws SQLException Will throw errors if trying to access closed statement/connection.
      */
     public static Object rowFetch(@NonNull final Table table, @NonNull final Row row, @NonNull final Column column) throws SQLException {
         ResultSet resultSet = table.getDatabase().getStmt().executeQuery(rowFetchTranslate(table.getTableName(), column.getColumnName(), table.getPrimaryKey(), row.getPrimaryValue()));
@@ -84,5 +84,20 @@ public final class SQLRowTranslator {
      */
     public static String rowFetchTranslate(@NonNull final String tableName, @NonNull final String columnName, @NonNull final Map.Entry<String, DataTypes> primaryKey, @NonNull final String primaryValue) {
         return "SELECT " + columnName + " FROM " + tableName + " WHERE " + primaryKey.getKey() + " = " + DataTypes.needQuotes(primaryValue, primaryKey.getValue()) + ";";
+    }
+
+    /**
+     * Update a value inside a table.
+     *
+     * @param table The table in which the value lies in
+     * @param row The row in which the value lies in
+     * @param column The column in which the value lies in
+     * @param value The new value to replace the old one
+     * @throws SQLException Will throw errors if trying to access closed statement/connection.
+     */
+    public static void rowUpdateTranslate(@NonNull final Table table, @NonNull final Row row, @NonNull final Column column, @NonNull final String value) throws SQLException {
+        final String statement = "UPDATE " + table.getTableName() + " SET " + column.getColumnName() + " = " + DataTypes.needQuotes(value, column.getColumnValues().getValue()) + " WHERE " + table.getPrimaryKey().getKey() + " = " + DataTypes.needQuotes(row.getPrimaryValue(), table.getPrimaryKey().getValue()) + ";";
+
+        table.getDatabase().getStmt().execute(statement);
     }
 }
