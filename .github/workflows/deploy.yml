@@ -1,7 +1,4 @@
-ame: Publish project to Maven repository
-# Publish manually
-on: workflow_dispatch
-# OR, publish per each commit
+name: Publish project to Maven repository
 on:
   release:
     types: [publish]
