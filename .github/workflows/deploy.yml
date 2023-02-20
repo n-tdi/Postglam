@@ -1,0 +1,29 @@
+ame: Publish project to Maven repository
+# Publish manually
+on: workflow_dispatch
+# OR, publish per each commit
+on:
+  release:
+    types: [publish]
+    
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Grant execute permission for mvnw
+        run: chmod +x ./mvnw
+      - uses: s4u/maven-settings-action@v2.6.0
+        with:
+          servers: |
+            [{
+              "id": "releases",
+              "username": "${{ secrets.MAVEN_NAME }}",
+              "password": "${{ secrets.MAVEN_SECRET }}"
+            }]
+      - name: Deploy with Maven
+        run: ./mvnw clean deploy
