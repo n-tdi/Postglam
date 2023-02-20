@@ -1,4 +1,9 @@
 # [Postglam](https://postglam.tech)
+[![Javadoc](https://img.shields.io/badge/JavaDoc-Online-green)](https://docs.postglam.tech)
+[![](https://jitpack.io/v/world.ntdi/Postglam.svg)](https://jitpack.io/#world.ntdi/Postglam)
+<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
+<img src="https://img.shields.io/badge/OpenJDK-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
+
 Postglam is a glamorous (glam) way of interacting with the PostgreSQL (Post) database structure, allowing you to create objects for connections and structured method calling.
 
 ## Maven Repo
@@ -20,7 +25,7 @@ Postglam is a glamorous (glam) way of interacting with the PostgreSQL (Post) dat
 Check the latest full release tag, the version will be exactly as it reads.
 
 ## Usage
-[Javadocs](https://docs.postglam.tech)
+[Javadoc](https://docs.postglam.tech)
 
 [Wiki](https://github.com/n-tdi/Postglam/wiki)
 
