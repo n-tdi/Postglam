@@ -1,7 +1,6 @@
 name: Publish project to Maven repository
 on:
-  release:
-    types: [publish]
+  push:
     
 jobs:
   publish:
