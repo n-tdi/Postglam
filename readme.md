@@ -10,8 +10,8 @@ Postglam is a glamorous (glam) way of interacting with the PostgreSQL (Post) dat
 *This is for your pom.xml*
 ```xml
 <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io/</url>
+    <id>releases</id>
+    <url>https://repo.ntdi.world</url>
 </repository>
 ```
 
