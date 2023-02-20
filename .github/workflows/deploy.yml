@@ -13,11 +13,6 @@ jobs:
           java-version: 17
       - uses: s4u/maven-settings-action@v2.8.0
         with:
-          servers: |
-            [{
-              "id": "releases",
-              "username": "${{ secrets.MAVEN_NAME }}",
-              "password": "${{ secrets.MAVEN_SECRET }}"
-            }]
+          servers: '[{"id": "releases", "username": "${{ secrets.MAVEN_NAME }}", "password": "${{ secrets.MAVEN_SECRET }}"}]'
       - name: Deploy with Maven
-        run: mvn clean deploy
+        run: mvn deploy
