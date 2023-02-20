@@ -159,7 +159,7 @@ public class Table {
          * @throws SQLException Will throw errors if trying to access closed statement/connection.
          */
         public void addColumn(String columnName, DataTypes dataType) throws SQLException {
-            getDatabase().getStmt().execute("ALTER TABLE " + getTableName() + " ADD COLUMN " + columnName + " " + dataType.toString() + " " + dataType.getNotNull() + ";");
+            getDatabase().getStmt().execute("ALTER TABLE " + getTableName() + " ADD COLUMN " + columnName + " " + dataType.toString() + ";");
             keys.put(columnName, dataType);
         }
 
