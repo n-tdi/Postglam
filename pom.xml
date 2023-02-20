@@ -79,9 +79,8 @@
 
     <distributionManagement>
         <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/n-tdi/Postglam</url>
+            <id>releases</id>
+            <url>https://repo.ntdi.world/releases</url>
         </repository>
     </distributionManagement>
 
