@@ -17,6 +17,7 @@ public class Row {
 
     /**
      * Create a representation of a row from a Table's primary key value.
+     *
      * @param table The table you want to get a row in
      * @param primaryValue The value of the primary key in that table
      * @throws SQLException if trying to use closed statement/connect.
@@ -27,6 +28,24 @@ public class Row {
 
         if (!table.doesRowExist(primaryValue)) {
             throw new SQLDataException("Unable to find row with primary value " + primaryValue);
+        }
+    }
+
+    /**
+     * Create a representation of a row from a Table's primary key value.
+     * If it does not exist, this method will give the row the specified values.
+     * It uses {@code table.insert()}, this is just for lazy people.
+     *
+     * @param table The table you want to get a row in
+     * @param primaryValue The value of the primary key in that table
+     * @throws SQLException if trying to use closed statement/connect.
+     */
+    public Row(Table table, String primaryValue, String... values) throws SQLException {
+        this.table = table;
+        this.primaryValue = primaryValue;
+
+        if (!table.doesRowExist(primaryValue)) {
+            table.insert(primaryValue, values);
         }
     }
 
