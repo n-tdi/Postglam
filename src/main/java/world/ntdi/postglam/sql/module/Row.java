@@ -16,12 +16,6 @@ public class Row {
     private final String primaryValue;
 
     /**
-     * Relies on the developer to know how to cast, and what type of data to cast the value to.
-     */
-    @Getter
-    private final Object[] values;
-
-    /**
      * Create a representation of a row from a Table's primary key value.
      * @param table The table you want to get a row in
      * @param primaryValue The value of the primary key in that table
@@ -34,8 +28,6 @@ public class Row {
         if (!table.doesRowExist(primaryValue)) {
             throw new SQLDataException("Unable to find row with primary value " + primaryValue);
         }
-
-        this.values = SQLRowTranslator.rowTranslate(table, primaryValue);
     }
 
     /**
@@ -76,6 +68,13 @@ public class Row {
      */
     @Override
     public String toString() {
+        Object[] values = new Object[0];
+        try {
+            values = SQLRowTranslator.rowTranslate(table, primaryValue);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         StringBuilder dataList = new StringBuilder();
 
         dataList.append("{\"").append(table.getPrimaryKey().getKey()).append("\":\"").append(values[0]).append("\", ");
