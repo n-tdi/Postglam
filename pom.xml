@@ -6,7 +6,7 @@
 
     <groupId>world.ntdi</groupId>
     <artifactId>postglam</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
