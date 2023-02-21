@@ -164,6 +164,19 @@ public class Table {
         }
 
         /**
+         * Add a column to the current table and give all users a default value instead of NULL.
+         *
+         * @param columnName The new column's name
+         * @param dataType The datatype the column represents
+         * @param defaultValue The dafault value of the column that all rows will possess.
+         * @throws SQLException Will throw errors if trying to access closed statement/connection.
+         */
+        public void addColumn(String columnName, DataTypes dataType, String defaultValue) throws SQLException {
+            getDatabase().getStmt().execute("ALTER TABLE " + getTableName() + " ADD COLUMN " + columnName + " " + dataType.toString() + " DEFAULT " + DataTypes.needQuotes(defaultValue, dataType) + ";");
+            keys.put(columnName, dataType);
+        }
+
+        /**
          * Drop a column out of the current table.
          *
          * @param column The column to drop
