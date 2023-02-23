@@ -111,6 +111,18 @@ public class Table {
     }
 
     /**
+     * Get a column inside a table.
+     * This method calls {@code new Column()}, the only purpose of this is to make your life simpler.
+     *
+     * @param columnName The name of the column
+     * @return A column object representing that targeted column.
+     * @throws SQLException Throws errors if trying to access closed statements/connections
+     */
+    public Column getColumn(String columnName) throws SQLException {
+        return new Column(this, columnName);
+    }
+
+    /**
      * Access all the altering methods for the table.
      * @return Alter
      */
