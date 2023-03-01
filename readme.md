@@ -34,4 +34,4 @@ Check the latest full release tag, the version will be exactly as it reads.
 
 ## Support
 Please feel free to make an [Issue](https://github.com/n-tdi/Postglam/issues) with any problems you may have.
-Or check out our [support discord here](https://dcbadge.vercel.app/api/server/gecVNWkjYv)
+Or check out our [support discord here](https://discord.gg/4GqtWBcDRN)
