@@ -123,6 +123,33 @@ public class Table {
     }
 
     /**
+     * Get a row inside a table.
+     * This method calls {@code new Row()}, the only purpose of this is to make your life simpler.
+     * This method will NOT initialize any values, if it does not exist, it will get angry!
+     *
+     * @param rowName The name of the column
+     * @return A column object representing that targeted column.
+     * @throws SQLException Throws errors if trying to access closed statements/connections
+     */
+    public Row getRow(String rowName) throws SQLException {
+        return new Row(this, rowName);
+    }
+
+    /**
+     * Get a row inside a table.
+     * This method calls {@code new Row()}, the only purpose of this is to make your life simpler.
+     * This method WILL initialize the specified values.
+     *
+     * @param rowName The name of the column
+     * @param values The values to initialize the row with
+     * @return A column object representing that targeted column.
+     * @throws SQLException Throws errors if trying to access closed statements/connections
+     */
+    public Row getRow(String rowName, String... values) throws SQLException {
+        return new Row(this, rowName, values);
+    }
+
+    /**
      * Access all the altering methods for the table.
      * @return Alter
      */
