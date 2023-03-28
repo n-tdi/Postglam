@@ -1,4 +1,6 @@
-# [Postglam](https://postglam.tech)
+<h1 align="center">
+    <a href="https://postglam.tech">Postglam</a>
+</h1>
 <p align="center">
     <a href="https://docs.postglam.tech"><img src="https://img.shields.io/badge/JavaDoc-Online-green" /></a>
     <img src="https://img.shields.io/github/v/release/n-tdi/postglam?display_name=release" />
