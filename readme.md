@@ -1,4 +1,6 @@
-# [Postglam](https://postglam.tech)
+<h1 align="center">
+    <a href="https://postglam.tech">Postglam</a>
+</h1>
 <p align="center">
     <a href="https://docs.postglam.tech"><img src="https://img.shields.io/badge/JavaDoc-Online-green" /></a>
     <img src="https://img.shields.io/github/v/release/n-tdi/postglam?display_name=release" />
@@ -34,4 +36,4 @@ Check the latest full release tag, the version will be exactly as it reads.
 
 ## Support
 Please feel free to make an [Issue](https://github.com/n-tdi/Postglam/issues) with any problems you may have.
-Or check out our [support discord here](https://dcbadge.vercel.app/api/server/gecVNWkjYv)
+Or check out our [support discord here](https://discord.gg/4GqtWBcDRN)
