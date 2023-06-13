@@ -74,7 +74,7 @@ public class Table {
      * @throws SQLException Throws errors if trying to access closed statements/connections
      */
     public boolean doesRowExist(String primaryValue) throws SQLException {
-        return SQLRowTranslator.rowExists(this, primaryValue);
+        return SQLRowTranslator.rowExists(this);
     }
 
     /**
@@ -173,9 +173,11 @@ public class Table {
 
             if (primaryKey.getKey().equals(column.getColumnName())) {
                 primaryKey = Map.entry(newName, primaryKey.getValue());
-            } else if (keys.containsKey(column.getColumnName())) {
-                keys.put(newName, keys.get(column.getColumnName()));
-                keys.remove(column.getColumnName());
+            } else {
+                DataTypes dataType = keys.remove(column.getColumnName());
+
+                if (dataType == null) return;
+                keys.put(newName, dataType);
             }
         }
 

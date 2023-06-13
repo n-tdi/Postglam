@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 import world.ntdi.postglam.data.DataTypes;
 import world.ntdi.postglam.sql.module.Table;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
@@ -24,7 +25,12 @@ public class SQLIDColumnTranslator {
     public LinkedHashMap<String, Object> idColumnValuesTranslate(@NonNull final Table table, @NonNull final Map.Entry<String, DataTypes> column) throws SQLException {
         LinkedHashMap<String, Object> values = new LinkedHashMap<>();
 
-        ResultSet resultSet = table.getDatabase().getStmt().executeQuery("SELECT " + table.getPrimaryKey().getKey() + ", " + column.getKey() + " FROM " + table.getTableName());
+        PreparedStatement preparedStatement = table.getDatabase().getC().prepareStatement("SELECT ?, ? FROM ?");
+        preparedStatement.setString(1, table.getPrimaryKey().getKey());
+        preparedStatement.setString(2, column.getKey());
+        preparedStatement.setString(3, table.getTableName());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
             values.put(resultSet.getString(table.getPrimaryKey().getKey()), resultSet.getObject(column.getKey()));

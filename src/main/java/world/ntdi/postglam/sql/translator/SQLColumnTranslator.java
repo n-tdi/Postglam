@@ -6,6 +6,7 @@ import lombok.experimental.UtilityClass;
 import world.ntdi.postglam.data.DataTypes;
 import world.ntdi.postglam.sql.module.Table;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -25,7 +26,11 @@ public class SQLColumnTranslator {
     public Object[] columnValuesTranslate(@NonNull final Table table, @NonNull final Map.Entry<String, DataTypes> column) throws SQLException {
         LinkedList<Object> values = new LinkedList<>();
 
-        ResultSet resultSet = table.getDatabase().getStmt().executeQuery("SELECT " + column.getKey() + " FROM " + table.getTableName());
+        PreparedStatement preparedStatement = table.getDatabase().getC().prepareStatement("SELECT ? FROM ?");
+        preparedStatement.setString(1, column.getKey());
+        preparedStatement.setString(2, table.getTableName());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
             values.add(resultSet.getObject(column.getKey()));

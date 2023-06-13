@@ -6,6 +6,7 @@ import world.ntdi.postglam.sql.module.Column;
 import world.ntdi.postglam.sql.module.Row;
 import world.ntdi.postglam.sql.module.Table;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -23,15 +24,18 @@ public final class SQLRowTranslator {
      * <b>NOTE: This does return the id column along side everything else</b>.
      *
      * @param table The table that holds the row
-     * @param primaryValue The value of the primary key
      * @return Returns a list of all the row's values.
      * @throws SQLException if trying to access closed statement/connection.
      */
-    public static Object[] rowTranslate(@NonNull final Table table, @NonNull final String primaryValue) throws SQLException {
+    public static Object[] rowTranslate(@NonNull final Table table) throws SQLException {
         List<Object> columnValues = new LinkedList<>();
 
-        // God damn, love java. This is why Postglam is glamorous, so you don't have to type out this one-liner shit.
-        ResultSet resultSet = table.getDatabase().getStmt().executeQuery("SELECT * FROM " + table.getTableName() + " WHERE " + table.getPrimaryKey().getKey() + " = " + DataTypes.needQuotes(primaryValue, table.getPrimaryKey().getValue()));
+        PreparedStatement preparedStatement = table.getDatabase().getC().prepareStatement("SELECT * FROM ? WHERE ? = ?");
+        preparedStatement.setString(1, table.getTableName());
+        preparedStatement.setString(2, table.getPrimaryKey().getKey());
+        preparedStatement.setObject(3, table.getPrimaryKey().getValue());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
             for (int i = 1; i <= table.getKeys().size() + 1; i++) {
@@ -46,12 +50,16 @@ public final class SQLRowTranslator {
      * Very important as the Row object will error if the row does not already exist in the table.
      *
      * @param table The table that may contain the row
-     * @param primaryValue The value of the primary key
      * @return If the row exists within the table.
      * @throws SQLException if trying to access closed statement/connection.
      */
-    public static boolean rowExists(@NonNull final Table table, @NonNull final String primaryValue) throws SQLException {
-        ResultSet resultSet = table.getDatabase().getStmt().executeQuery("SELECT * FROM " + table.getTableName() + " WHERE " + table.getPrimaryKey().getKey() + " = " + DataTypes.needQuotes(primaryValue, table.getPrimaryKey().getValue()));
+    public static boolean rowExists(@NonNull final Table table) throws SQLException {
+        PreparedStatement preparedStatement = table.getDatabase().getC().prepareStatement("SELECT * FROM ? WHERE ? = ?");
+        preparedStatement.setString(1, table.getTableName());
+        preparedStatement.setString(2, table.getPrimaryKey().getKey());
+        preparedStatement.setObject(3, table.getPrimaryKey().getValue());
+
+        ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet.next();
     }
 
@@ -65,25 +73,17 @@ public final class SQLRowTranslator {
      * @throws SQLException Will throw errors if trying to access closed statement/connection.
      */
     public static Object rowFetch(@NonNull final Table table, @NonNull final Row row, @NonNull final Column column) throws SQLException {
-        ResultSet resultSet = table.getDatabase().getStmt().executeQuery(rowFetchTranslate(table.getTableName(), column.getColumnName(), table.getPrimaryKey(), row.getPrimaryValue()));
+        PreparedStatement preparedStatement = table.getDatabase().getC().prepareStatement("SELECT ? FROM ? WHERE ? = ?");
+        preparedStatement.setString(1, table.getTableName());
+        preparedStatement.setString(2, column.getColumnName());
+        preparedStatement.setString(3, table.getPrimaryKey().getKey());
+        preparedStatement.setObject(4, row.getPrimaryValue());
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
             return resultSet.getObject(1);
         }
         return null;
-    }
-
-    /**
-     * Method that generates SQL for the fetching data.
-     *
-     * @param tableName Name of the table in which the data lies in
-     * @param columnName Name of the column in which the data lies in
-     * @param primaryKey Primary key values that contain the row in which the data lies in
-     * @param primaryValue The value of the primary key
-     * @return Returns a SQL statement.
-     */
-    public static String rowFetchTranslate(@NonNull final String tableName, @NonNull final String columnName, @NonNull final Map.Entry<String, DataTypes> primaryKey, @NonNull final String primaryValue) {
-        return "SELECT " + columnName + " FROM " + tableName + " WHERE " + primaryKey.getKey() + " = " + DataTypes.needQuotes(primaryValue, primaryKey.getValue()) + ";";
     }
 
     /**
@@ -96,8 +96,13 @@ public final class SQLRowTranslator {
      * @throws SQLException Will throw errors if trying to access closed statement/connection.
      */
     public static void rowUpdateTranslate(@NonNull final Table table, @NonNull final Row row, @NonNull final Column column, @NonNull final String value) throws SQLException {
-        final String statement = "UPDATE " + table.getTableName() + " SET " + column.getColumnName() + " = " + DataTypes.needQuotes(value, column.getColumnValues().getValue()) + " WHERE " + table.getPrimaryKey().getKey() + " = " + DataTypes.needQuotes(row.getPrimaryValue(), table.getPrimaryKey().getValue()) + ";";
+        PreparedStatement preparedStatement = table.getDatabase().getC().prepareStatement("UPDATE ? SET ? = ? WHERE ? = ?");
+        preparedStatement.setString(1, table.getTableName());
+        preparedStatement.setString(2, column.getColumnName());
+        preparedStatement.setObject(3, value);
+        preparedStatement.setString(4, table.getPrimaryKey().getKey());
+        preparedStatement.setObject(5, row.getPrimaryValue());
 
-        table.getDatabase().getStmt().execute(statement);
+        preparedStatement.execute();
     }
 }
