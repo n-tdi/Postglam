@@ -30,7 +30,7 @@ public class IDColumn {
         this.table = table;
         this.columnName = column;
         this.columnValues = Map.entry(column, DataTypes.getDataTypeFromColum(table, column));
-        this.values = SQLIDColumnTranslator.idColumnValuesTranslate(table, columnValues, null);
+        this.values = SQLIDColumnTranslator.idColumnValuesTranslate(table, columnValues);
     }
 
     /**
@@ -46,7 +46,7 @@ public class IDColumn {
         this.table = table;
         this.columnName = column;
         this.columnValues = Map.entry(column, DataTypes.getDataTypeFromColum(table, column));
-        this.values = SQLIDColumnTranslator.idColumnValuesTranslate(table, columnValues, ordering);
+        this.values = SQLIDColumnTranslator.idColumnValuesTranslate(table, columnValues);
     }
 
     @Override

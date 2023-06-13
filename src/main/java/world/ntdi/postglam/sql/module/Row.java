@@ -89,7 +89,7 @@ public class Row {
     public String toString() {
         Object[] values = new Object[0];
         try {
-            values = SQLRowTranslator.rowTranslate(table, primaryValue);
+            values = SQLRowTranslator.rowTranslate(table);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
