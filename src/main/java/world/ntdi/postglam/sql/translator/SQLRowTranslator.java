@@ -1,6 +1,7 @@
 package world.ntdi.postglam.sql.translator;
 
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 import world.ntdi.postglam.data.DataTypes;
 import world.ntdi.postglam.sql.module.Column;
 import world.ntdi.postglam.sql.module.Row;
@@ -95,7 +96,7 @@ public final class SQLRowTranslator {
      * @param value The new value to replace the old one
      * @throws SQLException Will throw errors if trying to access closed statement/connection.
      */
-    public static void rowUpdateTranslate(@NonNull final Table table, @NonNull final Row row, @NonNull final Column column, @NonNull final String value) throws SQLException {
+    public static void rowUpdateTranslate(@NonNull final Table table, @NonNull final Row row, @NonNull final Column column, @Nullable final String value) throws SQLException {
         PreparedStatement preparedStatement = table.getDatabase().getC().prepareStatement("UPDATE ? SET ? = ? WHERE ? = ?");
         preparedStatement.setString(1, table.getTableName());
         preparedStatement.setString(2, column.getColumnName());
