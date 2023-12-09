@@ -74,7 +74,7 @@ public class Table {
      * @throws SQLException Throws errors if trying to access closed statements/connections
      */
     public boolean doesRowExist(String primaryValue) throws SQLException {
-        return SQLRowTranslator.rowExists(this);
+        return SQLRowTranslator.rowExists(this, primaryValue);
     }
 
     /**

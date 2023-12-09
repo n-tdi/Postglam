@@ -12,6 +12,7 @@ import java.util.Map;
  * Refer to <a href="https://www.postgresql.org/docs/current/datatype.html">Postgresql Doc</a> for an explanation on each datatype.
  */
 public enum DataTypes {
+    NULL("null", false, false),
     BIGINT("bigint", false, false),
     BIGSERIAL("bigserial", false, false),
     BIT("bit", true, false),

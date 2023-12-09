@@ -54,11 +54,11 @@ public final class SQLRowTranslator {
      * @return If the row exists within the table.
      * @throws SQLException if trying to access closed statement/connection.
      */
-    public static boolean rowExists(@NonNull final Table table) throws SQLException {
+    public static boolean rowExists(@NonNull final Table table, @NonNull final String primaryValue) throws SQLException {
         PreparedStatement preparedStatement = table.getDatabase().getC().prepareStatement("SELECT * FROM ? WHERE ? = ?");
         preparedStatement.setString(1, table.getTableName());
         preparedStatement.setString(2, table.getPrimaryKey().getKey());
-        preparedStatement.setObject(3, table.getPrimaryKey().getValue());
+        preparedStatement.setObject(3, primaryValue);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet.next();
